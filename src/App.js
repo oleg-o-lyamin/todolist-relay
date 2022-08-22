@@ -1,9 +1,7 @@
 import "./App.css";
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import TodoList from "./components/TodoList";
 import AddTodoForm from "./components/AddTodoForm";
-
-import fetchGraphQL from "./server/fetchGraphQL";
 import RelayEnvironment from "./RelayEnvironment";
 import {
   RelayEnvironmentProvider,
@@ -27,9 +25,6 @@ const AllTodosQuery = graphql`
 const preloadedQuery = loadQuery(RelayEnvironment, AllTodosQuery);
 
 function App() {
-  // const [todos, setTodos] = useState([]);
-  function setTodos() {}
-
   const [queryRef, loadQueryRef] = useQueryLoader(
     AllTodosQuery,
     preloadedQuery
@@ -40,15 +35,6 @@ function App() {
   const refresh = () => {
     loadQueryRef(null, { fetchPolicy: "network-only" });
   };
-
-  function handleSwitchChange(isChecked) {
-    fetchGraphQL("{ todos { id title date completed } }").then((data) => {
-      let array = data.data.all;
-      if (!isChecked) array = array.filter((todo) => todo.completed === false);
-
-      setTodos(() => array);
-    });
-  }
 
   return (
     <div className="appWrapper">
