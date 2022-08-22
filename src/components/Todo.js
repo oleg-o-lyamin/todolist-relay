@@ -5,25 +5,32 @@ import CircleUnchecked from "@mui/icons-material/RadioButtonUnchecked";
 import CircleCheckedFilled from "@mui/icons-material/CheckCircle";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import fetchGraphQL from "../server/fetchGraphQL";
+import graphql from "babel-plugin-relay/macro";
+import { useMutation } from "react-relay";
 
-function Todo({ todo, onDelete }) {
-  const [completed, setCompleted] = useState(todo.completed);
+const TodoDeleteMutation = graphql`
+  mutation TodoDeleteMutation($id: String!) {
+    delete(id: $id)
+  }
+`;
+
+const TodoCompletionStatusMutation = graphql`
+  mutation TodoCompletionStatusMutation($id: String!, $completed: Boolean) {
+    edit(id: $id, input: { completed: $completed }) {
+      id
+      completed
+    }
+  }
+`;
+
+function Todo({ todo, refresh }) {
   const [isDeleteInFocus, setIsDeleteInFocus] = useState(false);
 
-  function handleCheckTodo(todo) {
-    const { id } = todo;
-    fetchGraphQL(
-      `mutation edit($id: String!, $input: TodoInput) {
-        edit(id: $id, input: $input) {
-          completed
-        }
-    }`,
-      { id, input: { completed: !completed } }
-    ).then((data) => {
-      setCompleted(() => data.data.edit.completed);
-    });
-  }
+  const [commitDeleteTodoMutation, isDeleteTodoMutationInFlight] =
+    useMutation(TodoDeleteMutation);
+
+  const [commitCompletionStatusMutation, isCompletionStatusMutationInFlight] =
+    useMutation(TodoCompletionStatusMutation);
 
   function handleDeleteFocus(value) {
     setIsDeleteInFocus(() => value);
@@ -35,11 +42,15 @@ function Todo({ todo, onDelete }) {
         icon={<CircleUnchecked />}
         checkedIcon={<CircleCheckedFilled />}
         sx={{ paddingTop: 0, paddingLeft: 0 }}
-        onClick={(_) => handleCheckTodo(todo)}
-        checked={completed}
+        onClick={(_) =>
+          commitCompletionStatusMutation({
+            variables: { id: todo.id, completed: !todo.completed },
+          })
+        }
+        checked={todo.completed}
       />
       <div>
-        <div className={`${completed ? "completed" : null} title`}>
+        <div className={`${todo.completed ? "completed" : null} title`}>
           {todo.title.length > 30
             ? todo.title.substring(0, 30) + "..."
             : todo.title}
@@ -51,7 +62,14 @@ function Todo({ todo, onDelete }) {
           aria-label="delete"
           onMouseOver={() => handleDeleteFocus(true)}
           onMouseOut={() => handleDeleteFocus(false)}
-          onClick={(_) => onDelete(todo)}
+          onClick={(_) =>
+            commitDeleteTodoMutation({
+              variables: { id: todo.id },
+              onCompleted: () => {
+                refresh();
+              },
+            })
+          }
         >
           <DeleteIcon />
         </IconButton>

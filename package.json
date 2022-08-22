@@ -29,6 +29,11 @@
     "eject": "react-scripts eject",
     "start-server": "node ./src/server/server.js"
   },
+  "relay": {
+    "src": "./src/",
+    "schema": "./src/server/schema.graphql",
+    "language": "javascript"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

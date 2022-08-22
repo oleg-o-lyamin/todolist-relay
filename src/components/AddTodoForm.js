@@ -5,11 +5,24 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import moment from "moment";
+import graphql from "babel-plugin-relay/macro";
+import { useMutation } from "react-relay";
+
+const AddTodoMutation = graphql`
+  mutation AddTodoFormAddTodoMutation($input: TodoInput) {
+    add(input: $input) {
+      id
+    }
+  }
+`;
 
 function AddTodoForm(props) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(Date.now());
   const [isError, setIsError] = useState(false);
+
+  const [commitAddTodoMutation, isAddTodoMutationInFlight] =
+    useMutation(AddTodoMutation);
 
   function handleTitleChange(event) {
     setIsError(() => false);
@@ -26,37 +39,42 @@ function AddTodoForm(props) {
       return;
     }
 
-    props.onAdd({ title, date });
+    commitAddTodoMutation({
+      variables: { input: { title, date } },
+      onCompleted: () => {
+        props.refresh();
+      },
+    });
+
     setTitle("");
     setDate(Date.now());
   }
 
   return (
-    <div className="form">
-      <TextField
-        label="Title"
-        fullWidth
-        value={title}
-        onChange={handleTitleChange}
-        error={isError}
-      />
-      {isError && <p className="formError">Title can't be empty.</p>}
-      <LocalizationProvider dateAdapter={AdapterMoment}>
-        <DateTimePicker
-          value={date}
-          onChange={handleDateChange}
-          renderInput={(pickerProps) => (
-            <TextField {...pickerProps} fullWidth sx={{ marginTop: "20px" }} />
-          )}
+    <div>
+      <div className="form">
+        <TextField
+          label="Title"
+          value={title}
+          onChange={handleTitleChange}
+          error={isError}
         />
-      </LocalizationProvider>
-      <Button
-        variant="contained"
-        sx={{ marginTop: "20px", maxWidth: "100px" }}
-        onClick={handleButtonClick}
-      >
-        Add
-      </Button>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <DateTimePicker
+            value={date}
+            onChange={handleDateChange}
+            renderInput={(pickerProps) => <TextField {...pickerProps} />}
+          />
+        </LocalizationProvider>
+        <Button
+          variant="contained"
+          sx={{ width: "120px" }}
+          onClick={handleButtonClick}
+        >
+          Add
+        </Button>
+      </div>
+      <div className="formError">{isError && "Title can't be empty."}</div>
     </div>
   );
 }

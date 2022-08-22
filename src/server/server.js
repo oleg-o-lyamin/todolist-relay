@@ -18,7 +18,7 @@ var schema = buildSchema(`
   }
 
   type Query {
-    all: [Todo]
+    todos: [Todo]
     todo(id: String!): Todo
   }
 
@@ -36,7 +36,7 @@ var schema = buildSchema(`
 `);
 
 var root = {
-  all: () => db.findAll(),
+  todos: () => db.findAll(),
   todo: ({ id }) => db.findById(id),
   add: ({ input }) => db.addTodo(input),
   edit: ({ id, input }) => db.editById(id, input),

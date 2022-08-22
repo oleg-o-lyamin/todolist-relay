@@ -16,7 +16,7 @@ function ExpirationDate(props) {
 
   return (
     <div className={isExpired ? "expiration red" : "expiration"}>
-      {isExpired ? "Expired on " : "Expires on "}
+      {isExpired ? "Overdue since " : "Due on "}
       {moment(props.date).format("dddd, MMMM Do YYYY, h:mm a")}
     </div>
   );
