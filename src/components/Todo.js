@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import graphql from "babel-plugin-relay/macro";
 import { useMutation } from "react-relay";
+import { TextField } from "@mui/material";
 
 const TodoDeleteMutation = graphql`
   mutation TodoDeleteMutation($id: String!) {
@@ -15,7 +16,7 @@ const TodoDeleteMutation = graphql`
 `;
 
 const TodoCompletionStatusMutation = graphql`
-  mutation TodoCompletionStatusMutation($id: String!, $completed: Boolean) {
+  mutation TodoCompletionStatusMutation($id: String!, $completed: Boolean!) {
     edit(id: $id, input: { completed: $completed }) {
       id
       completed
@@ -23,8 +24,19 @@ const TodoCompletionStatusMutation = graphql`
   }
 `;
 
+const TodoTitleMutation = graphql`
+  mutation TodoTitleMutation($id: String!, $title: String!) {
+    edit(id: $id, input: { title: $title }) {
+      id
+      title
+    }
+  }
+`;
+
 function Todo({ todo, refresh }) {
   const [isDeleteInFocus, setIsDeleteInFocus] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState(todo.title);
 
   const [commitDeleteTodoMutation, isDeleteTodoMutationInFlight] =
     useMutation(TodoDeleteMutation);
@@ -32,8 +44,25 @@ function Todo({ todo, refresh }) {
   const [commitCompletionStatusMutation, isCompletionStatusMutationInFlight] =
     useMutation(TodoCompletionStatusMutation);
 
+  const [commitTitleMutation, isTitleMutationInFlight] =
+    useMutation(TodoTitleMutation);
+
   function handleDeleteFocus(value) {
     setIsDeleteInFocus(() => value);
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      commitTitleMutation({
+        variables: { id: todo.id, title: text },
+      });
+      setIsEditing((_) => false);
+    } else if (event.key === "Escape") {
+      setText((_) => todo.title);
+      setIsEditing((_) => false);
+    } else {
+      setText((_) => event.target.value);
+    }
   }
 
   return (
@@ -50,11 +79,35 @@ function Todo({ todo, refresh }) {
         checked={todo.completed}
       />
       <div>
-        <div className={`${todo.completed ? "completed" : null} title`}>
-          {todo.title.length > 30
-            ? todo.title.substring(0, 30) + "..."
-            : todo.title}
-        </div>
+        {!isEditing && (
+          <div
+            className={`${todo.completed ? "completed" : null} title`}
+            onClick={() =>
+              setIsEditing((_) => {
+                return true;
+              })
+            }
+          >
+            {todo.title.length > 30
+              ? todo.title.substring(0, 30) + "..."
+              : todo.title}
+          </div>
+        )}
+        {isEditing && (
+          <TextField
+            variant="standard"
+            InputProps={{
+              disableUnderline: true,
+              style: { fontSize: 20 },
+            }}
+            onKeyDown={handleKeyDown}
+            inputRef={(input) => input && input.focus()}
+            defaultValue={text}
+            onBlur={() => setIsEditing(() => false)}
+          >
+            {text}
+          </TextField>
+        )}
         <ExpirationDate date={todo.date} />
       </div>
       <div className="deleteButton">

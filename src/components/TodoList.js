@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Todo from "./Todo";
-import InstrumentsPanel from "./InstrumentsPanel";
 
 function TodoList(props) {
-  const [isChecked, setIsChecked] = useState(false);
-
   const todos = props.todos
-    .filter((todo) => !isChecked || !todo.completed)
+    .filter((todo) => !props.isPending || !todo.completed)
     .map((todo) => (
       <Todo
         key={todo.id}
@@ -17,12 +14,7 @@ function TodoList(props) {
     ));
 
   return (
-    <div style={{ width: "100%" }}>
-      <InstrumentsPanel
-        onChange={(_) => {
-          setIsChecked((prev) => !prev);
-        }}
-      />
+    <div>
       {todos.length > 0 ? (
         todos
       ) : (

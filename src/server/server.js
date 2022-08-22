@@ -6,8 +6,9 @@ var cors = require("cors");
 
 var db = new Database();
 
-db.addTodo({ title: "123", date: Date.now(), completed: false });
-db.addTodo({ title: "456", date: Date.now(), completed: false });
+for (let i = 0; i < 5; i++) {
+  db.addTodo({ title: i, date: Date.now(), completed: false });
+}
 
 var schema = buildSchema(`
   type Todo {

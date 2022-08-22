@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c3bdb7c514ca26ea651409202a2a907b>>
+ * @generated SignedSource<<789f12e027c3e4b5a6a67be0fbddd04a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,17 +9,19 @@
 'use strict';
 
 var node = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "completed"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "id"
-},
-v2 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "title"
+  }
+],
+v1 = [
   {
     "alias": null,
     "args": [
@@ -32,8 +34,8 @@ v2 = [
         "fields": [
           {
             "kind": "Variable",
-            "name": "completed",
-            "variableName": "completed"
+            "name": "title",
+            "variableName": "title"
           }
         ],
         "kind": "ObjectValue",
@@ -56,7 +58,7 @@ v2 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "completed",
+        "name": "title",
         "storageKey": null
       }
     ],
@@ -65,38 +67,32 @@ v2 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "TodoCompletionStatusMutation",
-    "selections": (v2/*: any*/),
+    "name": "TodoTitleMutation",
+    "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "TodoCompletionStatusMutation",
-    "selections": (v2/*: any*/)
+    "name": "TodoTitleMutation",
+    "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "3e42d33b823c0495989b0e685aa6a4f0",
+    "cacheID": "5426459c6ac0bf68376c4137d5d83d7d",
     "id": null,
     "metadata": {},
-    "name": "TodoCompletionStatusMutation",
+    "name": "TodoTitleMutation",
     "operationKind": "mutation",
-    "text": "mutation TodoCompletionStatusMutation(\n  $id: String!\n  $completed: Boolean!\n) {\n  edit(id: $id, input: {completed: $completed}) {\n    id\n    completed\n  }\n}\n"
+    "text": "mutation TodoTitleMutation(\n  $id: String!\n  $title: String!\n) {\n  edit(id: $id, input: {title: $title}) {\n    id\n    title\n  }\n}\n"
   }
 };
 })();
 
-node.hash = "a679f10de8fa0b6e9bf367877fafa24e";
+node.hash = "c9ae291154c0c9be47771f9b1ef741ac";
 
 module.exports = node;

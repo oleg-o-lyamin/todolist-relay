@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useState, Suspense } from "react";
 import TodoList from "./components/TodoList";
 import AddTodoForm from "./components/AddTodoForm";
 import RelayEnvironment from "./RelayEnvironment";
@@ -10,6 +10,7 @@ import {
   loadQuery,
 } from "react-relay/hooks";
 import graphql from "babel-plugin-relay/macro";
+import InstrumentsPanel from "./components/InstrumentsPanel";
 
 const AllTodosQuery = graphql`
   query AppAllTodosQuery {
@@ -25,6 +26,8 @@ const AllTodosQuery = graphql`
 const preloadedQuery = loadQuery(RelayEnvironment, AllTodosQuery);
 
 function App() {
+  const [isPending, setIsPending] = useState(false);
+
   const [queryRef, loadQueryRef] = useQueryLoader(
     AllTodosQuery,
     preloadedQuery
@@ -45,7 +48,12 @@ function App() {
         <AddTodoForm refresh={refresh} />
       </div>
       <div className="wrapper">
-        <TodoList todos={todos} refresh={refresh} />
+        <InstrumentsPanel
+          onChange={(pending) => {
+            setIsPending((prev) => pending);
+          }}
+        />
+        <TodoList todos={todos} refresh={refresh} isPending={isPending} />
       </div>
     </div>
   );
@@ -54,7 +62,9 @@ function App() {
 function AppRoot(props) {
   return (
     <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <App />
+      <Suspense fallback={"Loading..."}>
+        <App />
+      </Suspense>
     </RelayEnvironmentProvider>
   );
 }

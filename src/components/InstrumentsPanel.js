@@ -7,8 +7,10 @@ function InstrumentsPanel({ onChange }) {
   const [isChecked, setIsChecked] = useState(false);
 
   function handleSwitchChange() {
-    setIsChecked((prevState) => !prevState);
-    onChange(isChecked);
+    setIsChecked((prevState) => {
+      onChange(!prevState);
+      return !prevState;
+    });
   }
 
   return (
