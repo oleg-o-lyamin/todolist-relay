@@ -1,3 +1,67 @@
+body {
+  margin: 0 auto;
+}
+
+.appWrapper {
+  padding: 0 600px;
+}
+
+header.appHeader {
+  padding: 20px 0 0;
+}
+
+.main {
+  display: flex;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.expiration {
+  font-size: 12px;
+}
+
+.red {
+  color: red;
+}
+
+.todoWrapper {
+  display: flex;
+  padding: 10px;
+}
+
+.focused {
+  background-color: rgb(243, 243, 243);
+}
+
+.instrumentsPanel {
+  padding-left: 5px;
+}
+
+.title {
+  font-size: 20px;
+  padding-top: 3px;
+}
+
+.deleteButton {
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.formError {
+  color: red;
+  margin: 0;
+  font-size: 12px;
+}
+
+/* 
 .App {
   text-align: center;
 }
@@ -35,4 +99,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
