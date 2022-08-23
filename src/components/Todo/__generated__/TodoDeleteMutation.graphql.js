@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<014080fe59386ef6d09ebfc28c700c3d>>
+ * @generated SignedSource<<f6cb26eb9fefbee4886ea8a7b90e69d8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,7 +27,7 @@ v1 = [
       }
     ],
     "kind": "ScalarField",
-    "name": "delete",
+    "name": "deleteTodo",
     "storageKey": null
   }
 ];
@@ -49,16 +49,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "61769d589ae7d837dd17f410fcbcb83b",
+    "cacheID": "81bf169977a7517823bcb96d50585133",
     "id": null,
     "metadata": {},
     "name": "TodoDeleteMutation",
     "operationKind": "mutation",
-    "text": "mutation TodoDeleteMutation(\n  $id: ID!\n) {\n  delete(id: $id)\n}\n"
+    "text": "mutation TodoDeleteMutation(\n  $id: ID!\n) {\n  deleteTodo(id: $id)\n}\n"
   }
 };
 })();
 
-node.hash = "26cb9b8cadf896962802aa912c981573";
+node.hash = "69c490e61b6c80f0a7d45bb92183a862";
 
 module.exports = node;

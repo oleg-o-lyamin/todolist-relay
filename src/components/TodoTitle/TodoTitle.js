@@ -5,7 +5,7 @@ import "./TodoTitle.css";
 
 const TodoTitleMutation = graphql`
   mutation TodoTitleMutation($id: ID!, $title: String!) {
-    edit(id: $id, input: { title: $title }) {
+    editTodo(id: $id, input: { title: $title }) {
       id
       title
     }

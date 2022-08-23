@@ -24,7 +24,7 @@ import "./Todo.css";
 //
 const TodoDeleteMutation = graphql`
   mutation TodoDeleteMutation($id: ID!) {
-    delete(id: $id)
+    deleteTodo(id: $id)
   }
 `;
 
@@ -34,7 +34,7 @@ const TodoDeleteMutation = graphql`
 //
 const TodoCompletionStatusMutation = graphql`
   mutation TodoCompletionStatusMutation($id: ID!, $completed: Boolean!) {
-    edit(id: $id, input: { completed: $completed }) {
+    editTodo(id: $id, input: { completed: $completed }) {
       id
       completed
     }

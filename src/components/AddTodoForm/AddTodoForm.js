@@ -11,7 +11,7 @@ import "./AddTodoForm.css";
 
 const AddTodoMutation = graphql`
   mutation AddTodoFormAddTodoMutation($input: TodoInput) {
-    add(input: $input) {
+    addTodo(input: $input) {
       id
     }
   }

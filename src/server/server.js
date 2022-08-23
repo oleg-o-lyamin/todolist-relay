@@ -9,7 +9,7 @@ const port = process.env.PORT;
 const db = new Database();
 
 for (let i = 0; i < 5; i++) {
-  db.addTodo({ title: i, date: Date.now(), completed: false });
+  db.add({ title: i, date: Date.now(), completed: false });
 }
 
 const schema = buildSchema(`
@@ -32,18 +32,18 @@ const schema = buildSchema(`
   }
 
   type Mutation {
-    add(input: TodoInput): Todo
-    edit(id: ID!, input: TodoInput): Todo
-    delete(id: ID!): Boolean
+    addTodo(input: TodoInput): Todo
+    editTodo(id: ID!, input: TodoInput): Todo
+    deleteTodo(id: ID!): Boolean
   }  
 `);
 
 const root = {
   todos: () => db.findAll(),
   todo: ({ id }) => db.findById(id),
-  add: ({ input }) => db.addTodo(input),
-  edit: ({ id, input }) => db.editById(id, input),
-  delete: ({ id }) => db.deleteById(id),
+  addTodo: ({ input }) => db.add({ ...input, completed: false }),
+  editTodo: ({ id, input }) => db.editById(id, input),
+  deleteTodo: ({ id }) => db.deleteById(id),
 };
 
 const corsOptions = {

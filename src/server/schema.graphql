@@ -17,7 +17,7 @@ input TodoInput {
 }
 
 type Mutation {
-  add(input: TodoInput): Todo
-  edit(id: ID!, input: TodoInput): Todo
-  delete(id: ID!): Boolean
+  addTodo(input: TodoInput): Todo
+  editTodo(id: ID!, input: TodoInput): Todo
+  deleteTodo(id: ID!): Boolean
 }

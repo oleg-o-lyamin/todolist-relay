@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e50b81b01671b78c936cee1c3e72ca1b>>
+ * @generated SignedSource<<354b855651be7093c6cc5f8e29841b46>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,7 +42,7 @@ v2 = [
     ],
     "concreteType": "Todo",
     "kind": "LinkedField",
-    "name": "edit",
+    "name": "editTodo",
     "plural": false,
     "selections": [
       {
@@ -87,16 +87,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "cca5e5c5fbd5028a6a22cd5fe8a9ce89",
+    "cacheID": "38ada6f2caae2d36e77a609a64a4abd8",
     "id": null,
     "metadata": {},
     "name": "TodoCompletionStatusMutation",
     "operationKind": "mutation",
-    "text": "mutation TodoCompletionStatusMutation(\n  $id: ID!\n  $completed: Boolean!\n) {\n  edit(id: $id, input: {completed: $completed}) {\n    id\n    completed\n  }\n}\n"
+    "text": "mutation TodoCompletionStatusMutation(\n  $id: ID!\n  $completed: Boolean!\n) {\n  editTodo(id: $id, input: {completed: $completed}) {\n    id\n    completed\n  }\n}\n"
   }
 };
 })();
 
-node.hash = "0d4a147306471563f3ce84a5bc32d59d";
+node.hash = "8b1bfb2d617f27ccc56ea1abb66132b2";
 
 module.exports = node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d1a845877f52858810029da406d68a6>>
+ * @generated SignedSource<<ce82eb57037cc520a2fec438e58bac7a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ v1 = [
     ],
     "concreteType": "Todo",
     "kind": "LinkedField",
-    "name": "add",
+    "name": "addTodo",
     "plural": false,
     "selections": [
       {
@@ -60,16 +60,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "a6e567e32a67c0408561b82a02ed9638",
+    "cacheID": "1589b5798907c990dafee23f1c41b5bd",
     "id": null,
     "metadata": {},
     "name": "AddTodoFormAddTodoMutation",
     "operationKind": "mutation",
-    "text": "mutation AddTodoFormAddTodoMutation(\n  $input: TodoInput\n) {\n  add(input: $input) {\n    id\n  }\n}\n"
+    "text": "mutation AddTodoFormAddTodoMutation(\n  $input: TodoInput\n) {\n  addTodo(input: $input) {\n    id\n  }\n}\n"
   }
 };
 })();
 
-node.hash = "be844b94753396c442f0578cfae9fa40";
+node.hash = "381385759bfd23282a3341b5751208d8";
 
 module.exports = node;

@@ -1,14 +1,14 @@
 var Database = function () {
   this.database = [];
 
-  this.addTodo = function (todo) {
+  this.add = function (input) {
     const id = "abcdefghijklmnopqrstuvwxyz"
       .split("")
       .reduce(
         (prev, current) => (Math.random() > 0.5 ? prev + current : prev),
         ""
       );
-    const entry = { id, ...todo, completed: false };
+    const entry = { id, ...input };
     this.database.push(entry);
     return entry;
   };
@@ -18,20 +18,20 @@ var Database = function () {
   };
 
   this.findById = function (id) {
-    return this.database.find((todo) => todo.id === id);
+    return this.database.find((entry) => entry.id === id);
   };
 
-  this.editById = function (id, todo) {
-    const index = this.database.findIndex((todo) => todo.id === id);
+  this.editById = function (id, entry) {
+    const index = this.database.findIndex((el) => el.id === id);
     if (index === -1) return null;
 
     const databaseEntry = this.database[index];
-    this.database[index] = { ...databaseEntry, ...todo };
+    this.database[index] = { ...databaseEntry, ...entry };
     return this.database[index];
   };
 
   this.deleteById = function (id) {
-    const index = this.database.findIndex((todo) => todo.id === id);
+    const index = this.database.findIndex((el) => el.id === id);
     if (index === -1) return false;
 
     this.database.splice(index, 1);
