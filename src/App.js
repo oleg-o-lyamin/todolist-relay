@@ -1,16 +1,11 @@
 import "./App.css";
-import React, { useState, Suspense } from "react";
-import TodoList from "./components/TodoList";
-import AddTodoForm from "./components/AddTodoForm";
-import RelayEnvironment from "./RelayEnvironment";
-import {
-  RelayEnvironmentProvider,
-  usePreloadedQuery,
-  useQueryLoader,
-  loadQuery,
-} from "react-relay/hooks";
+import React, { useState, Suspense, useCallback } from "react";
+import TodoList from "./components/TodoList/TodoList";
+import AddTodoForm from "./components/AddTodoForm/AddTodoForm";
+import { usePreloadedQuery, useQueryLoader } from "react-relay/hooks";
 import graphql from "babel-plugin-relay/macro";
-import InstrumentsPanel from "./components/InstrumentsPanel";
+import InstrumentsPanel from "./components/InstrumentsPanel/InstrumentsPanel";
+import { ErrorBoundary } from "react-error-boundary";
 
 const AllTodosQuery = graphql`
   query AppAllTodosQuery {
@@ -23,9 +18,7 @@ const AllTodosQuery = graphql`
   }
 `;
 
-const preloadedQuery = loadQuery(RelayEnvironment, AllTodosQuery);
-
-function App() {
+function App({ preloadedQuery }) {
   const [isPending, setIsPending] = useState(false);
 
   const [queryRef, loadQueryRef] = useQueryLoader(
@@ -35,9 +28,9 @@ function App() {
 
   const { todos } = usePreloadedQuery(AllTodosQuery, queryRef);
 
-  const refresh = () => {
+  const refresh = useCallback(() => {
     loadQueryRef(null, { fetchPolicy: "network-only" });
-  };
+  }, [loadQueryRef]);
 
   return (
     <div className="appWrapper">
@@ -59,14 +52,18 @@ function App() {
   );
 }
 
-function AppRoot(props) {
+function AppWrapper({ preloadedQuery }) {
   return (
-    <RelayEnvironmentProvider environment={RelayEnvironment}>
+    <ErrorBoundary
+      fallbackRender={({ error }) => (
+        <div style={{ color: "red" }}>{error.message}</div>
+      )}
+    >
       <Suspense fallback={"Loading..."}>
-        <App />
+        <App preloadedQuery={preloadedQuery} />
       </Suspense>
-    </RelayEnvironmentProvider>
+    </ErrorBoundary>
   );
 }
 
-export default AppRoot;
+export default AppWrapper;

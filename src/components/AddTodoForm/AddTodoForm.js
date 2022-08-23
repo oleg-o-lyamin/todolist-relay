@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import moment from "moment";
 import graphql from "babel-plugin-relay/macro";
 import { useMutation } from "react-relay";
+import "./AddTodoForm.css";
 
 const AddTodoMutation = graphql`
   mutation AddTodoFormAddTodoMutation($input: TodoInput) {
@@ -21,8 +22,7 @@ function AddTodoForm(props) {
   const [date, setDate] = useState(Date.now());
   const [isError, setIsError] = useState(false);
 
-  const [commitAddTodoMutation, isAddTodoMutationInFlight] =
-    useMutation(AddTodoMutation);
+  const [commitAddTodoMutation] = useMutation(AddTodoMutation);
 
   function handleTitleChange(event) {
     setIsError(() => false);
@@ -33,7 +33,7 @@ function AddTodoForm(props) {
     setDate(() => parseFloat(moment(event._d).format("x")));
   }
 
-  function handleButtonClick() {
+  function __handleEvent() {
     if (title == null || title === "") {
       setIsError(() => true);
       return;
@@ -50,6 +50,14 @@ function AddTodoForm(props) {
     setDate(Date.now());
   }
 
+  function handleButtonClick() {
+    __handleEvent();
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Enter") __handleEvent();
+  }
+
   return (
     <div>
       <div className="form">
@@ -58,6 +66,7 @@ function AddTodoForm(props) {
           value={title}
           onChange={handleTitleChange}
           error={isError}
+          onKeyDown={handleKeyDown}
         />
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <DateTimePicker

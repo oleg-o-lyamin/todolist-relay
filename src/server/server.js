@@ -1,16 +1,18 @@
-var Database = require("./database");
-var express = require("express");
-var { graphqlHTTP } = require("express-graphql");
-var { buildSchema } = require("graphql");
-var cors = require("cors");
+const Database = require("./database");
+const express = require("express");
+const { graphqlHTTP } = require("express-graphql");
+const { buildSchema } = require("graphql");
+const cors = require("cors");
 
-var db = new Database();
+const PORT = 4000;
+
+const db = new Database();
 
 for (let i = 0; i < 5; i++) {
   db.addTodo({ title: i, date: Date.now(), completed: false });
 }
 
-var schema = buildSchema(`
+const schema = buildSchema(`
   type Todo {
     id: String!
     title: String!
@@ -36,7 +38,7 @@ var schema = buildSchema(`
   }  
 `);
 
-var root = {
+const root = {
   todos: () => db.findAll(),
   todo: ({ id }) => db.findById(id),
   add: ({ input }) => db.addTodo(input),
@@ -44,13 +46,13 @@ var root = {
   delete: ({ id }) => db.deleteById(id),
 };
 
-var corsOptions = {
+const corsOptions = {
   origin: "*",
   credentials: true,
   optionSuccessStatus: 200,
 };
 
-var app = express();
+const app = express();
 
 app.use(cors(corsOptions));
 
@@ -63,6 +65,8 @@ app.use(
   })
 );
 
-app.listen(4000);
+app.listen(PORT);
 
-console.log("Running a GraphQL API server at http://localhost:4000/graphql.");
+console.log(
+  `Running a GraphQL API server at http://localhost:${PORT}/graphql.`
+);

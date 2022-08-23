@@ -1,0 +1,17 @@
+.edit {
+  position: relative;
+  border: 0;
+  font-size: 20px;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  padding: 0;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.completed {
+  text-decoration: line-through;
+}

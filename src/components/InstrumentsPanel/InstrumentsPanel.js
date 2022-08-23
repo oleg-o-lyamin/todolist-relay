@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Switch from "@mui/material/Switch";
+import "./InstrumentsPanel.css";
 
 function InstrumentsPanel({ onChange }) {
   const [isChecked, setIsChecked] = useState(false);

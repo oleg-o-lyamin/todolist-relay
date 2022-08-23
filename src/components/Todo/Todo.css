@@ -1,0 +1,12 @@
+.todoWrapper {
+  display: flex;
+  padding: 10px;
+}
+
+.focused {
+  background-color: rgb(243, 243, 243);
+}
+
+.deleteButton {
+  margin-left: auto;
+}
