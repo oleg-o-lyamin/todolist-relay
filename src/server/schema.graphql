@@ -1,5 +1,5 @@
 type Todo {
-  id: String!
+  id: ID!
   title: String!
   date: Float!
   completed: Boolean!
@@ -7,7 +7,7 @@ type Todo {
 
 type Query {
   todos: [Todo]
-  todo(id: String!): Todo
+  todo(id: ID!): Todo
 }
 
 input TodoInput {
@@ -18,6 +18,6 @@ input TodoInput {
 
 type Mutation {
   add(input: TodoInput): Todo
-  edit(id: String!, input: TodoInput): Todo
-  delete(id: String!): Boolean
+  edit(id: ID!, input: TodoInput): Todo
+  delete(id: ID!): Boolean
 }

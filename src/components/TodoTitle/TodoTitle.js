@@ -4,7 +4,7 @@ import graphql from "babel-plugin-relay/macro";
 import "./TodoTitle.css";
 
 const TodoTitleMutation = graphql`
-  mutation TodoTitleMutation($id: String!, $title: String!) {
+  mutation TodoTitleMutation($id: ID!, $title: String!) {
     edit(id: $id, input: { title: $title }) {
       id
       title

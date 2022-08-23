@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c3bdb7c514ca26ea651409202a2a907b>>
+ * @generated SignedSource<<e50b81b01671b78c936cee1c3e72ca1b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -87,16 +87,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "3e42d33b823c0495989b0e685aa6a4f0",
+    "cacheID": "cca5e5c5fbd5028a6a22cd5fe8a9ce89",
     "id": null,
     "metadata": {},
     "name": "TodoCompletionStatusMutation",
     "operationKind": "mutation",
-    "text": "mutation TodoCompletionStatusMutation(\n  $id: String!\n  $completed: Boolean!\n) {\n  edit(id: $id, input: {completed: $completed}) {\n    id\n    completed\n  }\n}\n"
+    "text": "mutation TodoCompletionStatusMutation(\n  $id: ID!\n  $completed: Boolean!\n) {\n  edit(id: $id, input: {completed: $completed}) {\n    id\n    completed\n  }\n}\n"
   }
 };
 })();
 
-node.hash = "a679f10de8fa0b6e9bf367877fafa24e";
+node.hash = "0d4a147306471563f3ce84a5bc32d59d";
 
 module.exports = node;

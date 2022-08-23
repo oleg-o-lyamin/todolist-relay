@@ -16,14 +16,14 @@ import "./Todo.css";
 // компоненты Todo из списка TodoList,
 // однако это приводит к ошибке, связанной с порядком
 // обновления родительских (App и TodoList) компонент
-// и дочерних (Todo). 
+// и дочерних (Todo).
 // Ошибка описана здесь: https://github.com/facebook/relay/issues/3514
 // Предложенное там решение -- через планировщик обновления -- не сработало.
 // Поэтому обновление списка производится принудительно через refresh-колбэк,
 // определённый в компоненте App.
-// 
+//
 const TodoDeleteMutation = graphql`
-  mutation TodoDeleteMutation($id: String!) {
+  mutation TodoDeleteMutation($id: ID!) {
     delete(id: $id)
   }
 `;
@@ -33,7 +33,7 @@ const TodoDeleteMutation = graphql`
 // Здесь колбэк refresh, определенный в компоненте App для случая удаления todo из списка, не используется.
 //
 const TodoCompletionStatusMutation = graphql`
-  mutation TodoCompletionStatusMutation($id: String!, $completed: Boolean!) {
+  mutation TodoCompletionStatusMutation($id: ID!, $completed: Boolean!) {
     edit(id: $id, input: { completed: $completed }) {
       id
       completed

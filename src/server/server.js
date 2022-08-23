@@ -14,7 +14,7 @@ for (let i = 0; i < 5; i++) {
 
 const schema = buildSchema(`
   type Todo {
-    id: String!
+    id: ID!
     title: String!
     date: Float!
     completed: Boolean!
@@ -22,7 +22,7 @@ const schema = buildSchema(`
 
   type Query {
     todos: [Todo]
-    todo(id: String!): Todo
+    todo(id: ID!): Todo
   }
 
   input TodoInput {
@@ -33,8 +33,8 @@ const schema = buildSchema(`
 
   type Mutation {
     add(input: TodoInput): Todo
-    edit(id: String!, input: TodoInput): Todo
-    delete(id: String!): Boolean
+    edit(id: ID!, input: TodoInput): Todo
+    delete(id: ID!): Boolean
   }  
 `);
 
