@@ -46,6 +46,7 @@ function TodoTitle({ todo }) {
   return (
     <>
       {!isEditing && (
+        // длинные названия для красоты обрезаются
         <div
           className={`${todo.completed ? "completed " : ""}title`}
           onClick={() => {

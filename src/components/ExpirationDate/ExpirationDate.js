@@ -5,11 +5,12 @@ import "./ExpirationDate.css";
 function ExpirationDate(props) {
   const [isExpired, setIsExpired] = useState(false);
 
+  // добавление таймера
   useEffect(() => {
-    if (Date.now() >= props.date) setIsExpired(() => true);
+    if (Date.now() >= props.date) setIsExpired(true);
     else {
       const interval = setInterval(() => {
-        if (Date.now() >= props.date) setIsExpired(() => true);
+        if (Date.now() >= props.date) setIsExpired(true);
       }, 60000);
       return () => clearInterval(interval);
     }

@@ -1,5 +1,7 @@
 async function fetchGraphQL(query, variables = null) {
-  const response = await fetch("http://localhost:4000/graphql", {
+  const port = process.env.REACT_APP_GRAPHQL_SERVER_PORT;
+
+  const response = await fetch(`http://localhost:${port}/graphql`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

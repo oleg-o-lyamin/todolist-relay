@@ -4,7 +4,7 @@ const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
 const cors = require("cors");
 
-const PORT = 4000;
+const port = process.env.PORT;
 
 const db = new Database();
 
@@ -65,8 +65,8 @@ app.use(
   })
 );
 
-app.listen(PORT);
+app.listen(port);
 
 console.log(
-  `Running a GraphQL API server at http://localhost:${PORT}/graphql.`
+  `Running a GraphQL API server at http://localhost:${port}/graphql.`
 );

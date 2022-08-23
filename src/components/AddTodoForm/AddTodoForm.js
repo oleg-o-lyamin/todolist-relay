@@ -25,17 +25,17 @@ function AddTodoForm(props) {
   const [commitAddTodoMutation] = useMutation(AddTodoMutation);
 
   function handleTitleChange(event) {
-    setIsError(() => false);
+    setIsError(false);
     setTitle(event.target.value);
   }
 
   function handleDateChange(event) {
-    setDate(() => parseFloat(moment(event._d).format("x")));
+    setDate(parseFloat(moment(event._d).format("x")));
   }
 
-  function __handleEvent() {
+  function __handleAddTodoEvent() {
     if (title == null || title === "") {
-      setIsError(() => true);
+      setIsError(true);
       return;
     }
 
@@ -51,11 +51,11 @@ function AddTodoForm(props) {
   }
 
   function handleButtonClick() {
-    __handleEvent();
+    __handleAddTodoEvent();
   }
 
   function handleKeyDown(event) {
-    if (event.key === "Enter") __handleEvent();
+    if (event.key === "Enter") __handleAddTodoEvent();
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import ExpirationDate from "../ExpirationDate/ExpirationDate";
 import Checkbox from "@mui/material/Checkbox";
 import CircleUnchecked from "@mui/icons-material/RadioButtonUnchecked";
@@ -10,12 +10,28 @@ import { useMutation } from "react-relay";
 import TodoTitle from "../TodoTitle/TodoTitle";
 import "./Todo.css";
 
+//
+// Здесь должно было быть delete(id: $id) @deleteRecord,
+// вызывающее автоматическое удаление соответствующей
+// компоненты Todo из списка TodoList,
+// однако это приводит к ошибке, связанной с порядком
+// обновления родительских (App и TodoList) компонент
+// и дочерних (Todo). 
+// Ошибка описана здесь: https://github.com/facebook/relay/issues/3514
+// Предложенное там решение -- через планировщик обновления -- не сработало.
+// Поэтому обновление списка производится принудительно через refresh-колбэк,
+// определённый в компоненте App.
+// 
 const TodoDeleteMutation = graphql`
   mutation TodoDeleteMutation($id: String!) {
     delete(id: $id)
   }
 `;
 
+//
+// Редактирование данных todo приводит к автоматической перерисовке компоненты, вызванной средствами relay.
+// Здесь колбэк refresh, определенный в компоненте App для случая удаления todo из списка, не используется.
+//
 const TodoCompletionStatusMutation = graphql`
   mutation TodoCompletionStatusMutation($id: String!, $completed: Boolean!) {
     edit(id: $id, input: { completed: $completed }) {
