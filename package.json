@@ -32,7 +32,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-server": "PORT=4000 node ./src/server/server.js"
+    "start-graphql-server": "PORT=4000 node ./src/server/server.js"
   },
   "relay": {
     "src": "./src/",
